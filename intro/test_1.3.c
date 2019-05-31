@@ -9,8 +9,11 @@ int main(int argc, char **argv)
 	if (argc != 2)
 		err_quit("usage: a.out <IPaddress>");
 
-	if ( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+	if ( (sockfd = socket(9999, SOCK_STREAM, 0)) < 0)
+	{
+		printf("errno:%d, \"%s\"\n", errno, strerror(errno));
 		err_sys("socket error");
+	}
 
 	bzero(&servaddr, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;

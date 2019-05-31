@@ -3,7 +3,8 @@ include ../Make.defines
 PROGS =	daytimetcpcli daytimetcpcli1 daytimetcpcli2 daytimetcpcli3 \
 		daytimetcpsrv daytimetcpsrv1 daytimetcpsrv2 daytimetcpsrv3 \
 		daytimetcpcliv6 daytimetcpsrvv6 \
-		byteorder
+		byteorder \
+		test_1.3  test_1.4 test_1.5  #add test programs
 
 all:	${PROGS}
 
@@ -39,6 +40,16 @@ daytimetcpsrvv6:	daytimetcpsrvv6.o
 
 byteorder:	byteorder.o
 		${CC} ${CFLAGS} -o $@ byteorder.o ${LIBS}
+
+#add test programs
+test_1.3:	test_1.3.o
+		${CC} ${CFLAGS} -o $@ test_1.3.o ${LIBS}
+
+test_1.4:	test_1.4.o
+		${CC} ${CFLAGS} -o $@ test_1.4.o ${LIBS}
+
+test_1.5:	test_1.5.o
+		${CC} ${CFLAGS} -o $@ test_1.5.o ${LIBS}
 
 clean:
 		rm -f ${PROGS} ${CLEANFILES}
