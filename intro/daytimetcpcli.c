@@ -30,5 +30,8 @@ int main(int argc, char **argv)
 	if (n < 0)
 		err_sys("read error");
 
+	Close(sockfd);	
+	printf("close connection before exit.\n");
+	
 	exit(0);
 }
