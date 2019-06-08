@@ -1,5 +1,9 @@
 #include	"unp.h"
 
+//get the LSB byte, if it is char[0], then little-endian
+#define ENDIANNESS ((char) endians.i)    
+static union {char list[sizeof(int)]; int i;} endians = {{'L', '?', '?', 'B'}};
+
 int
 main(int argc, char **argv)
 {
@@ -19,6 +23,8 @@ main(int argc, char **argv)
 			printf("unknown\n");
 	} else
 		printf("sizeof(short) = %d\n", sizeof(short));
+
+	printf("ENDIANNESS is %c \n", ENDIANNESS);
 
 	exit(0);
 }
