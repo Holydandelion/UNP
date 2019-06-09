@@ -43,13 +43,13 @@ byteorder:	byteorder.o
 
 #add test programs
 test_1.3:	test_1.3.o
-		${CC} ${CFLAGS} -o $@ test_1.3.o ${LIBS}
+		${CC} ${CFLAGS} -o $@ $^ ${LIBS}
 
 test_1.4:	test_1.4.o
-		${CC} ${CFLAGS} -o $@ test_1.4.o ${LIBS}
+		${CC} ${CFLAGS} -o $@ $^ ${LIBS}
 
 test_1.5:	test_1.5.o
-		${CC} ${CFLAGS} -o $@ test_1.5.o ${LIBS}
+		${CC} ${CFLAGS} -o $@ $^ ${LIBS}
 
 clean:
 		rm -f ${PROGS} ${CLEANFILES}
