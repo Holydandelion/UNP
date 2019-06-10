@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv)
 {
-	int					listenfd, connfd, i;
+	int					listenfd, connfd;
 	struct sockaddr_in	servaddr;
 	char				buff[MAXLINE];
 	time_t				ticks;
@@ -24,9 +24,8 @@ int main(int argc, char **argv)
 
         ticks = time(NULL);
         snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
-        
-        for(i=0;i<strlen(buff);i++)
-        	Write(connfd, &buff[i], 1);
+               
+        write_n(connfd, &buff, strlen(buff));
 
 		Close(connfd);
 	}

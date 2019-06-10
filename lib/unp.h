@@ -315,6 +315,8 @@ int		 udp_server(const char *, const char *, socklen_t *);
 int		 writable_timeo(int, int);
 ssize_t	 writen(int, const void *, size_t);
 ssize_t	 write_fd(int, void *, size_t, int);
+ssize_t  read_n(int fd, void *vptr, size_t n);  /*read n bytes from a descriptor or read to end*/
+ssize_t  write_n(int fd, const void *vptr, size_t n);	/*write n bytes to a descriptor*/
 
 #ifdef	MCAST
 int		 mcast_leave(int, const SA *, socklen_t);

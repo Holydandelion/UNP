@@ -22,7 +22,8 @@ int main(int argc, char **argv)
 	if (connect(sockfd, (SA *) &servaddr, sizeof(servaddr)) < 0)
 		err_sys("connect error");
 
-	while ( (n = read(sockfd, recvline, MAXLINE)) > 0) 
+	printf("connect success.\r\n");
+	while ( (n = read_n(sockfd, recvline, MAXLINE)) > 0) 
 	{
 		counter++;
 		recvline[n] = 0;	/* null terminate */
