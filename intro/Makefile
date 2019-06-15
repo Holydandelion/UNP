@@ -4,7 +4,11 @@ PROGS =	daytimetcpcli daytimetcpcli1 daytimetcpcli2 daytimetcpcli3 \
 		daytimetcpsrv daytimetcpsrv1 daytimetcpsrv2 daytimetcpsrv3 \
 		daytimetcpcliv6 daytimetcpsrvv6 \
 		byteorder \
-		test_1.3  test_1.4 test_1.5  #add test programs
+
+#add test programs
+PROGS += test_1.3  test_1.4 test_1.5  my_daytimetcpsrv1 \
+         test_4.2
+		
 
 all:	${PROGS}
 
@@ -50,6 +54,13 @@ test_1.4:	test_1.4.o
 
 test_1.5:	test_1.5.o
 		${CC} ${CFLAGS} -o $@ $^ ${LIBS}
+
+my_daytimetcpsrv1 : my_daytimetcpsrv1.o
+		${CC} ${CFLAGS} -o $@  $^ ${LIBS}
+
+test_4.2:test_4.2.o
+
+		${CC} ${CFLAGS} -o $@ $< ${LIBS}
 
 clean:
 		rm -f ${PROGS} ${CLEANFILES}
