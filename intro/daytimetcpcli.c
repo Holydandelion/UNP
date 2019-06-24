@@ -1,10 +1,12 @@
 #include	"unp.h"
+#include <sys/stat.h>
 
 int main(int argc, char **argv)
 {
 	int					sockfd, n;
 	char				recvline[MAXLINE + 1];
 	struct sockaddr_in	servaddr;
+	struct stat stat_buff = {0};
 
 	if (argc != 2)
 		err_quit("usage: a.out <IPaddress>");
@@ -12,6 +14,19 @@ int main(int argc, char **argv)
 	if ( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 		err_sys("socket error");
 
+	if (fstat(sockfd, &stat_buff) < 0)
+		err_sys("lstat error");		
+
+	if (S_ISSOCK(stat_buff.st_mode))
+		printf("[DEBUG]socket fd is socket descriptor, fd:%d mode:%ld  user:%d\n", sockfd, stat_buff.st_mode, stat_buff.st_uid);
+
+	if (S_ISUID & stat_buff.st_mode)
+		printf("[DEBUG]set_uid\n");
+		
+
+	if (S_ISGID  & stat_buff.st_mode)
+		printf("[DEBUG]set_gid\n");
+		
 	bzero(&servaddr, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_port   = htons(13);	/* daytime server */
