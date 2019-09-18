@@ -4,6 +4,7 @@
 int main(int argc, char **argv)
 {
 	int					listenfd, connfd;
+	int 				n = 0;
 	struct sockaddr_in	servaddr;
 	char				buff[MAXLINE];
 	time_t				ticks;
@@ -25,7 +26,9 @@ int main(int argc, char **argv)
         ticks = time(NULL);
         snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
                
-        write_n(connfd, &buff, strlen(buff));
+        for (n=0;n<strlen(buff);n++)
+        	write(connfd, &buff[n], 1);
+        
 
 		Close(connfd);
 	}

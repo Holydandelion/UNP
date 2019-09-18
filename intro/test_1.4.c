@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 		err_sys("connect error");
 
 	printf("connect success.\r\n");
-	while ( (n = read_n(sockfd, recvline, MAXLINE)) > 0) 
+	while ( (n = read(sockfd, recvline, MAXLINE)) > 0) 
 	{
 		counter++;
 		recvline[n] = 0;	/* null terminate */
