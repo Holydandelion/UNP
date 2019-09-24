@@ -1,10 +1,11 @@
 include ../Make.defines
 
+CFLAGS += -D NOTDEF
 PROGS =	tcpcli01 tcpcli04 tcpcli05 tcpcli06 \
 		tcpcli07 tcpcli08 tcpcli09 tcpcli10 tcpcli11\
 		tcpserv01 tcpserv02 tcpserv03 tcpserv04 \
 		tcpserv08 tcpserv09 tcpservselect01  tsigpipe \
-		test_5_1-server test_5_1-cilent
+		test_5_1-server test_5_1-cilent test_6_8
 
 all:	${PROGS}
 
@@ -69,6 +70,9 @@ test_5_1-server:	test_5_1-server.o
 		
 test_5_1-cilent:	test_5_1-client.o
 		$(CC) $(CFLAGS) -o $@ $^ ${LIBS}
+
+test_6_8:	test_6_8.o
+		$(CC) $(CFLAGS) -o $@ $^ ${LIBS} 
 
 clean:
 		rm -f ${PROGS} ${CLEANFILES}
