@@ -1,6 +1,6 @@
 include ../Make.defines
 
-PROGS =	checkopts prdefaults rcvbuf rcvbufset sockopt
+PROGS =	checkopts prdefaults rcvbuf rcvbufset sockopt test_7_1  test_7_2 test_7_3
 
 all:	${PROGS}
 
@@ -19,5 +19,14 @@ rcvbuf:	rcvbuf.o
 rcvbufset:	rcvbufset.o
 		${CC} ${CFLAGS} -o $@ rcvbufset.o ${LIBS}
 
+test_7_1:	test_7_1.o
+		${CC} ${CFLAGS} -o $@ $< ${LIBS}
+
+test_7_2:	test_7_2.o
+		${CC} ${CFLAGS} -o $@ $< ${LIBS}
+
+test_7_3:	test_7_3.o
+		${CC} ${CFLAGS} -o $@ $< ${LIBS}
+		
 clean:
 		rm -f ${PROGS} ${CLEANFILES}
