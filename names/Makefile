@@ -4,8 +4,9 @@ PROGS =	daytimetcpcli daytimetcpcli1 daytimetcpsrv1 daytimetcpsrv2 \
 		daytimetcpsrv3 daytimetcpsrv4 \
 		daytimeudpcli1 daytimetcpcli2 daytimetcpcli3 \
 		daytimeudpcli2 daytimeudpsrv2 daytimeudpsrv3 \
-		hostent hostent2 hostent3 \
-		netent prmyaddrs prmyaddrs1 test1
+		hostent hostent2 \
+		netent prmyaddrs prmyaddrs1 test1 \
+		test_11_8 test_12_2_IPV4 test_12_2_IPV6
 
 all:	${PROGS}
 
@@ -69,6 +70,15 @@ test1:	test1.o
 
 test2:	test2.o
 		${CC} ${CFLAGS} -o $@ test2.o ${LIBS}
+
+test_11_8:	test_11_8.o
+		${CC} ${CFLAGS} -o $@ $^ ${LIBS}
+		
+test_12_2_IPV4:	test_12_2_IPV4.o
+		${CC} ${CFLAGS} -o $@ $^ ${LIBS}
+
+test_12_2_IPV6:	test_12_2_IPV6.o
+		${CC} ${CFLAGS} -o $@ $^ ${LIBS}				
 
 clean:
 		rm -f ${PROGS} ${CLEANFILES}
