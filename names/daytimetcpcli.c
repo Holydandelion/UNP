@@ -17,9 +17,21 @@ main(int argc, char **argv)
 	Getpeername(sockfd, (SA *)&ss, &len);
 	printf("connected to %s\n", Sock_ntop_host((SA *)&ss, len));
 
-	while ( (n = Read(sockfd, recvline, MAXLINE)) > 0) {
+	
+	for (; ;)
+	{
+		if ( (n = recv(sockfd, recvline, MAXLINE, MSG_PEEK)) == 0)
+			break;
+		else if (n < 0)
+			err_sys("recv error: \n");
+		
+		ictol(sockfd, FIONREAD, &pend_read);
+		printf("%d bytes from recv, %d bytes from pendind \n", n, pend_read);	
+		
+		n = Read(sockfd, recvline, MAXLINE);
 		recvline[n] = 0;	/* null terminate */
 		Fputs(recvline, stdout);
+		 
 	}
 	exit(0);
 }
