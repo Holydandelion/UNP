@@ -19,13 +19,15 @@ main(int argc, char **argv)
 #endif
 	else
 		err_quit("invalid <address-family>");
+	
 	doaliases = atoi(argv[2]);
 
-	for (ifihead = ifi = Get_ifi_info(family, doaliases);
-		 ifi != NULL; ifi = ifi->ifi_next) {
+	for (ifihead = ifi = Get_ifi_info(family, doaliases); ifi != NULL; ifi = ifi->ifi_next) 
+	{
 		printf("%s: ", ifi->ifi_name);
 		if (ifi->ifi_index != 0)
 			printf("(%d) ", ifi->ifi_index);
+		
 		printf("<");
 /* *INDENT-OFF* */
 		if (ifi->ifi_flags & IFF_UP)			printf("UP ");
@@ -36,9 +38,11 @@ main(int argc, char **argv)
 		printf(">\n");
 /* *INDENT-ON* */
 
-		if ( (i = ifi->ifi_hlen) > 0) {
+		if ( (i = ifi->ifi_hlen) > 0) 
+		{
 			ptr = ifi->ifi_haddr;
-			do {
+			do 
+			{
 				printf("%s%x", (i == ifi->ifi_hlen) ? "  " : ":", *ptr++);
 			} while (--i > 0);
 			printf("\n");
@@ -47,14 +51,15 @@ main(int argc, char **argv)
 			printf("  MTU: %d\n", ifi->ifi_mtu);
 
 		if ( (sa = ifi->ifi_addr) != NULL)
-			printf("  IP addr: %s\n",
-						Sock_ntop_host(sa, sizeof(*sa)));
+			printf("  IP addr: %s\n", Sock_ntop_host(sa, sizeof(*sa)));
+		
 		if ( (sa = ifi->ifi_brdaddr) != NULL)
-			printf("  broadcast addr: %s\n",
-						Sock_ntop_host(sa, sizeof(*sa)));
+			printf("  broadcast addr: %s\n", Sock_ntop_host(sa, sizeof(*sa)));
+		
 		if ( (sa = ifi->ifi_dstaddr) != NULL)
-			printf("  destination addr: %s\n",
-						Sock_ntop_host(sa, sizeof(*sa)));
+			printf("  destination addr: %s\n", Sock_ntop_host(sa, sizeof(*sa)));
+		
+		printf("\n");
 	}
 	free_ifi_info(ifihead);
 	exit(0);

@@ -1,6 +1,6 @@
 include ../Make.defines
 
-PROGS =	checkudpsum getrt mynetstat \
+PROGS =	 getrt mynetstat \
 		prifinfo prifindex prifname prifnameindex
 
 all:	${PROGS}

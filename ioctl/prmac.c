@@ -4,27 +4,36 @@
 int
 main(int argc, char **argv)
 {
-	int					sockfd;
-	struct ifi_info			*ifi;
-	unsigned char		*ptr;
-	struct arpreq		arpreq;
-	struct sockaddr_in	*sin;
+	int sockfd	= -1;
+	int i		= 0; 	
+	struct ifi_info	*ifi, *ifihead;
+	struct ifreq ifr;
+	unsigned char *ptr = NULL;
 
-	sockfd = Socket(AF_INET, SOCK_DGRAM, 0);
-	for (ifi = get_ifi_info(AF_INET, 0); ifi != NULL; ifi = ifi->ifi_next) {
-		printf("%s: ", Sock_ntop(ifi->ifi_addr, sizeof(struct sockaddr_in)));
+	if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0 )
+		err_sys("socket error");
 
-		sin = (struct sockaddr_in *) &arpreq.arp_pa;
-		memcpy(sin, ifi->ifi_addr, sizeof(struct sockaddr_in));
+	for (ifihead = ifi = Get_ifi_info(AF_INET, 1); ifi != NULL; ifi = ifi->ifi_next) 
+	{
+		printf("%s: ", ifi->ifi_name);
+		memset(&ifr, 0x00, sizeof(ifr));
+		
+		strncpy(ifr.ifr_name, ifi->ifi_name, sizeof(ifr.ifr_name));
+		
+		if (ioctl(sockfd, SIOCGIFADDR, &ifr) < 0)
+			err_sys("1-ioctl error");
 
-		if (ioctl(sockfd, SIOCGARP, &arpreq) < 0) {
-			err_ret("ioctl SIOCGARP");
-			continue;
+		ifr.ifr_hwaddr.sa_family = ARPHRD_ETHER;		
+		if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) < 0)
+			err_sys("2-ioctl error");
+
+		ptr = (unsigned char *)ifr.ifr_hwaddr.sa_data;
+		for (i=0;i<6;i++)
+		{
+			printf("%02x%s", ptr[i], i == 5 ? "":":");
 		}
-
-		ptr = &arpreq.arp_ha.sa_data[0];
-		printf("%x:%x:%x:%x:%x:%x\n", *ptr, *(ptr+1),
-			   *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5));
+		printf("\n");
 	}
+	free_ifi_info(ifihead);
 	exit(0);
 }
