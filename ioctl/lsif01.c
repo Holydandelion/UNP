@@ -24,7 +24,8 @@ main(int argc, char **argv)
 		if (ifr->ifr_addr.sa_len > len)
 			len = ifr->ifr_addr.sa_len;		/* length > 16 */
 #endif
-		ptr += sizeof(ifr->ifr_name) + len;	/* for next one in buffer */
+		/* ptr += sizeof(ifr->ifr_name) + len;	 for next one in buffer */
+		ptr += sizeof(struct ifreq);
 
 		switch (ifr->ifr_addr.sa_family) {
 		case AF_INET:

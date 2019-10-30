@@ -13,12 +13,15 @@ get_ifi_info(int family, int doaliases)
 	struct sockaddr_in6	*sin6ptr;
 
 	sockfd = Socket(family, SOCK_DGRAM, 0);
-	printf("family:%d \n", family);
+	printf("family:%d \n", family);	
 
 	lastlen = 0;
-	len = 100 * sizeof(struct ifreq);	/* initial buffer size guess */
+	len = 1 * sizeof(struct ifreq);	/* initial buffer size guess */
+
 	for ( ; ; ) 
-	{
+	{			
+		printf("len:%d \n", len);
+	
 		buf = Malloc(len);
 		ifc.ifc_len = len;
 		ifc.ifc_buf = buf;
@@ -32,10 +35,12 @@ get_ifi_info(int family, int doaliases)
 			if (ifc.ifc_len == lastlen)
 				break;		/* success, len has not changed */
 			lastlen = ifc.ifc_len;
+			printf("lastlen:%d \n", lastlen);
 		}
-		len += 10 * sizeof(struct ifreq);	/* increment */
+		len += 1 * sizeof(struct ifreq);	/* increment */
 		free(buf);
 	}
+	
 	ifihead = NULL;
 	ifipnext = &ifihead;
 	lastname[0] = 0;
