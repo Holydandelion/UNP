@@ -1,7 +1,7 @@
 include ../Make.defines
 
-PROGS =	 getrt mynetstat \
-		prifinfo prifindex prifname prifnameindex
+PROGS =	   prifindex\
+		  prifname prifnameindex
 
 all:	${PROGS}
 

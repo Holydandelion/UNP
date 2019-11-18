@@ -18,3 +18,5 @@ const char	*sock_masktop(struct sockaddr *, socklen_t);
 char	*Net_rt_iflist(int, int, size_t *);
 char	*Net_rt_dump(int, int, size_t *);
 #define	Sock_masktop(a,b)		sock_masktop((a), (b))
+
+#define RTAX_MAX 8
