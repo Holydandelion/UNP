@@ -2,11 +2,13 @@
 
 static void	*doit(void *);		/* each thread executes this function */
 
+static void str_echo_new(int sockfd);
+
 int
 main(int argc, char **argv)
 {
 	int				listenfd, *iptr;
-	thread_t		tid;
+	pthread_t		tid;
 	socklen_t		addrlen, len;
 	struct sockaddr	*cliaddr;
 
@@ -36,7 +38,24 @@ doit(void *arg)
 	free(arg);
 
 	Pthread_detach(pthread_self());
-	str_echo(connfd);		/* same function as before */
+	str_echo_new(connfd);		/* same function as before */
 	Close(connfd);			/* done with connected socket */
 	return(NULL);
+}
+
+
+void
+str_echo_new(int sockfd)
+{
+	ssize_t		n;
+	char		buf[MAXLINE];
+
+again:
+	while ( (n = Readline_r(sockfd, buf, MAXLINE)) > 0)
+		Writen(sockfd, buf, n);
+
+	if (n < 0 && errno == EINTR)
+		goto again;
+	else if (n < 0)
+		err_sys("str_echo: read error");
 }

@@ -1,7 +1,7 @@
 include ../Make.defines
 
 PROGS =	 web03 \
-	tcpcli01 tcpcli02 tcpserv01 tcpserv02 \
+	tcpcli01 tcpcli02 tcpserv01 tcpserv02g\
 	test01 example01 example02 example03
 
 all:	${PROGS}
@@ -29,8 +29,8 @@ tcpserv02:	tcpserv02.o
 		${CC} ${CFLAGS} -o $@ tcpserv02.o ${LIBS}
 
 # Correct one that uses thread-safe readline().
-tcpserv02g:	tcpserv02.o readline.o
-		${CC} ${CFLAGS} -o $@ tcpserv02.o readline.o ${LIBS}
+tcpserv02g:	tcpserv02.o readline_r.o
+		${CC} ${CFLAGS} -o $@ tcpserv02.o readline_r.o ${LIBS}
 
 test01:	test01.o
 		${CC} ${CFLAGS} -o $@ test01.o ${LIBS}

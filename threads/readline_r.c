@@ -7,6 +7,7 @@ static pthread_once_t	rl_once = PTHREAD_ONCE_INIT;
 static void
 readline_destructor(void *ptr)
 {
+	printf("destroy 0x%p\n", ptr);
 	free(ptr);
 }
 
@@ -14,6 +15,7 @@ static void
 readline_once(void)
 {
 	Pthread_key_create(&rl_key, readline_destructor);
+	printf("create key:%d \n", rl_key);
 }
 
 typedef struct {
@@ -44,7 +46,7 @@ again:
 }
 
 ssize_t
-readline(int fd, void *vptr, size_t maxlen)
+readline_r(int fd, void *vptr, size_t maxlen)
 {
 	size_t		n, rc;
 	char	c, *ptr;
@@ -54,6 +56,7 @@ readline(int fd, void *vptr, size_t maxlen)
 	if ( (tsd = pthread_getspecific(rl_key)) == NULL) {
 		tsd = Calloc(1, sizeof(Rline));		/* init to 0 */
 		Pthread_setspecific(rl_key, tsd);
+		printf("malloc:0x%p \n", tsd);
 	}
 
 	ptr = vptr;
@@ -75,11 +78,11 @@ readline(int fd, void *vptr, size_t maxlen)
 /* end readline2 */
 
 ssize_t
-Readline(int fd, void *ptr, size_t maxlen)
+Readline_r(int fd, void *ptr, size_t maxlen)
 {
 	ssize_t		n;
 
-	if ( (n = readline(fd, ptr, maxlen)) < 0)
+	if ( (n = readline_r(fd, ptr, maxlen)) < 0)
 		err_sys("readline error");
 	return(n);
 }
