@@ -53,7 +53,7 @@ readable_v6(void)
 			   hip6->ip6_nxt);
  		if (hip6->ip6_nxt == IPPROTO_UDP) {
 			udp = (struct udphdr *) (buf + 8 + hlen2);
-			sport = udp->uh_sport;
+			sport = udp->source;
 
 				/* 4find client's Unix domain socket, send headers */
 			for (i = 0; i <= maxi; i++) {
@@ -68,7 +68,7 @@ readable_v6(void)
 #endif
 					memcpy(&dest.sin6_addr, &hip6->ip6_dst,
 						   sizeof(struct in6_addr));
-					dest.sin6_port = udp->uh_dport;
+					dest.sin6_port = udp->dest;
 
 					icmpd_err.icmpd_type = icmp6->icmp6_type;
 					icmpd_err.icmpd_code = icmp6->icmp6_code;

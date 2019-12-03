@@ -50,7 +50,7 @@ readable_v4(void)
 			   hip->ip_p);
  		if (hip->ip_p == IPPROTO_UDP) {
 			udp = (struct udphdr *) (buf + hlen1 + 8 + hlen2);
-			sport = udp->uh_sport;
+			sport = udp->source;
 
 				/* 4find client's Unix domain socket, send headers */
 			for (i = 0; i <= maxi; i++) {
@@ -65,7 +65,7 @@ readable_v4(void)
 #endif
 					memcpy(&dest.sin_addr, &hip->ip_dst,
 						   sizeof(struct in_addr));
-					dest.sin_port = udp->uh_dport;
+					dest.sin_port = udp->dest;
 
 					icmpd_err.icmpd_type = icmp->icmp_type;
 					icmpd_err.icmpd_code = icmp->icmp_code;

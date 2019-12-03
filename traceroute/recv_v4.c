@@ -52,8 +52,8 @@ recv_v4(int seq, struct timeval *tv)
 
 			udp = (struct udphdr *) (recvbuf + hlen1 + 8 + hlen2);
  			if (hip->ip_p == IPPROTO_UDP &&
-				udp->uh_sport == htons(sport) &&
-				udp->uh_dport == htons(dport + seq)) {
+				udp->source == htons(sport) &&
+				udp->dest == htons(dport + seq)) {
 				ret = -2;		/* we hit an intermediate router */
 				break;
 			}
@@ -69,8 +69,8 @@ recv_v4(int seq, struct timeval *tv)
 
 			udp = (struct udphdr *) (recvbuf + hlen1 + 8 + hlen2);
  			if (hip->ip_p == IPPROTO_UDP &&
-				udp->uh_sport == htons(sport) &&
-				udp->uh_dport == htons(dport + seq)) {
+				udp->source == htons(sport) &&
+				udp->dest == htons(dport + seq)) {
 				if (icmp->icmp_code == ICMP_UNREACH_PORT)
 					ret = -1;	/* have reached destination */
 				else

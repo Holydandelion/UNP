@@ -47,8 +47,8 @@ recv_v6(int seq, struct timeval *tv)
 			hlen2 = sizeof(struct ip6_hdr);
 			udp = (struct udphdr *) (recvbuf + 8 + hlen2);
 			if (hip6->ip6_nxt == IPPROTO_UDP &&
-				udp->uh_sport == htons(sport) &&
-				udp->uh_dport == htons(dport + seq))
+				udp->source == htons(sport) &&
+				udp->dest == htons(dport + seq))
 				ret = -2;		/* we hit an intermediate router */
 				break;
 
@@ -60,8 +60,8 @@ recv_v6(int seq, struct timeval *tv)
 			hlen2 = sizeof(struct ip6_hdr);
 			udp = (struct udphdr *) (recvbuf + 8 + hlen2);
 			if (hip6->ip6_nxt == IPPROTO_UDP &&
-				udp->uh_sport == htons(sport) &&
-				udp->uh_dport == htons(dport + seq)) {
+				udp->source == htons(sport) &&
+				udp->dest == htons(dport + seq)) {
 				if (icmp6->icmp6_code == ICMP6_DST_UNREACH_NOPORT)
 					ret = -1;	/* have reached destination */
 				else
