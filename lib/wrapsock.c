@@ -172,7 +172,7 @@ Listen(int fd, int backlog)
 		backlog = atoi(ptr);
 
 	if (listen(fd, backlog) < 0)
-		err_sys("listen error");
+		err_sys("listen error, backlog:%d, fd:%d, ");
 }
 /* end Listen */
 

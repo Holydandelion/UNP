@@ -14,7 +14,7 @@ tcp_listen(const char *host, const char *serv, socklen_t *addrlenp)
 	hints.ai_socktype = SOCK_STREAM;
 
 	if ( (n = getaddrinfo(host, serv, &hints, &res)) != 0)
-		err_quit("tcp_listen error for %s, %s: %s",
+		err_quit("tcp_listen error, getaddrinfo for %s, %s: %s",
 				 host, serv, gai_strerror(n));
 	ressave = res;
 
@@ -31,7 +31,7 @@ tcp_listen(const char *host, const char *serv, socklen_t *addrlenp)
 	} while ( (res = res->ai_next) != NULL);
 
 	if (res == NULL)	/* errno from final socket() or bind() */
-		err_sys("tcp_listen error for %s, %s", host, serv);
+		err_sys("tcp_listen error for %s, %s, no retruned addrinfo", host, serv);
 
 	Listen(listenfd, LISTENQ);
 
